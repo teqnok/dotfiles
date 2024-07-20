@@ -1,0 +1,19 @@
+local config = require 'config'
+if config.Plugins.gitsigns_enabled then
+return {
+    { -- Adds git related signs to the gutter, as well as utilities for managing changes
+      'lewis6991/gitsigns.nvim',
+      opts = {
+        signs = {
+          add = { text = '│' },
+          change = { text = '│' },
+          delete = { text = '│' },
+          topdelete = { text = '│' },
+          changedelete = { text = '│' },
+        },
+      },
+    },
+  }
+else
+    return {}
+end
