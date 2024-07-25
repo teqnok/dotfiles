@@ -2,7 +2,7 @@ local config = require 'config'
 if config.Plugins.statusline == 'lualine' then
     return {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons', 'arkav/lualine-lsp-progress', opt = false },
+        dependencies = { 'nvim-tree/nvim-web-devicons', opt = false},
         config = function()
             require('lualine').setup {
                 options = {
@@ -11,7 +11,7 @@ if config.Plugins.statusline == 'lualine' then
                     component_separators = { left = '|', right = '|' },
                     section_separators = { left = ' ', right = ' ' },
                     disabled_filetypes = {
-                        statusline = {},
+                        statusline = {"NvimTree", "neo-tree"},
                         winbar = {},
                     },
                     ignore_focus = {},

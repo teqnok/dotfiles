@@ -84,7 +84,6 @@ if Config.Plugins.completion == "nvim-cmp" then
         vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#8aadf4", bg = "NONE", bold = true })
         vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#8aadf4", bg = "NONE", bold = true })
         vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#f5bde6", bg = "NONE", italic = true })
-            
       end,
     },
   }

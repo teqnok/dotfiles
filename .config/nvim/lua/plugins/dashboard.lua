@@ -22,7 +22,7 @@ if config.Plugins.dashboard == "alpha" then
         dashboard.button('t', '󰺮  Find text', ':Telescope live_grep<CR>'),
         dashboard.button('u', '  Update plugins', ':Lazy update<CR>'),
         dashboard.button('r', '  Recent', ':Telescope oldfiles<CR>'),
-        dashboard.button('s', '  Settings', ':e $MYVIMRC | :cd %:p:h | split . | wincmd k<CR>'),
+        dashboard.button('s', '  Settings', ':e $MYVIMRC | :cd %:p:h<CR>'),
         dashboard.button('q', '󰅚  Quit NVIM', ':qa<CR>'),
       }
 

@@ -1,0 +1,108 @@
+local Modes = {
+    Visual   = 'v',
+    Normal   = 'n',
+    Command  = 'c',
+    Terminal = 't',
+    Select   = 's',
+    Insert   = 'i',
+    Replace  = 'r',
+}
+local config = require 'config'
+
+---@param mode string
+---@param bind string
+---@param cmd string | function
+---@param opts table
+local nmap = function(mode, bind, cmd, opts)
+    vim.keymap.set(mode, bind, cmd, opts)
+end
+-- General
+nmap(Modes.Normal, '<leader>n', '<CMD>nohlsearch<CR>', { noremap = true, desc = "Stop search" })
+-- Text Buffers
+-- Set deletion to copy to "a instead of " by default,
+nmap(Modes.Normal, 'd', '"ad', { noremap = true })
+nmap(Modes.Visual, 'd', '"ad', { noremap = true })
+-- and ' p' to paste from "a
+nmap(Modes.Normal, '<leader>p', '"ap', { noremap = true, desc = "Paste from deletion buffer" })
+nmap(Modes.Visual, '<leader>p', '"ap', { noremap = true, desc = "Paste from deletion buffer" })
+-- {{{ LSP
+if config.Options.enable_lsp then
+    nmap(Modes.Normal, '<leader>q', function()
+        vim.lsp.buf.format()
+    end, { desc = '[Q] Format File' })
+    nmap(Modes.Normal, "<leader>ca", function()
+        require("tiny-code-action").code_action()
+    end, { noremap = true, silent = true })
+end
+-- }}}
+-- Telescope --
+if config.Plugins.telescope_enabled then
+    nmap(Modes.Normal, '<leader>F', '<CMD>Telescope find_files<CR>', { desc = '[F] Find Files' })
+    nmap(Modes.Normal, '<leader>ff', '<CMD>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
+    nmap(Modes.Normal, '<leader>fg', '<CMD>Telescope live_grep<CR>', { desc = '[F]ind w/ [G]rep' })
+    nmap(Modes.Normal, '<leader>ds', '<CMD>Telescope lsp_document_symbols<CR>', { desc = '[D]ocument [S]ymbols' })
+end
+nmap(Modes.Normal, '<leader>dw', '<CMD>w<CR>', { desc = '[D]ocument [W]rite' })
+nmap(Modes.Normal, '<leader>dc', '<CMD>bdelete<CR>', { desc = '[D]ocument [C]lose' })
+
+-- Window management --
+nmap(Modes.Normal, '<C-Left>', '<CMD>wincmd h<CR>', { desc = 'Move to [H] window' })
+nmap(Modes.Normal, '<C-Down>', '<CMD>wincmd j<CR>', { desc = 'Move to [J] window' })
+nmap(Modes.Normal, '<C-Right>', '<CMD>wincmd l<CR>', { desc = 'Move to [L] window' })
+nmap(Modes.Normal, '<C-Up>', '<CMD>wincmd k<CR>', { desc = 'Move to [K] window' })
+if config.Options.tmux_integration then
+    nmap(Modes.Normal, '<C-h>', '<CMD>TmuxNavigateLeft<CR>', { desc = "[T] Window left" })
+    nmap(Modes.Normal, '<C-j>', '<CMD>TmuxNavigateDown<CR>', { desc = "[T] Window down" })
+    nmap(Modes.Normal, '<C-k>', '<CMD>TmuxNavigateUp<CR>', { desc = "[T] Window up" })
+    nmap(Modes.Normal, '<C-l>', '<CMD>TmuxNavigateRight<CR>', { desc = "[T] Window right" })
+end
+nmap(Modes.Normal, '<leader>sh', '<CMD>split<CR>', { desc = '[S]plit [H]orizontal' })
+nmap(Modes.Normal, '<leader>sv', '<CMD>vs<CR>', { desc = '[S]plit [V]ertical' })
+
+-- Terminal --
+if config.Plugins.toggleterm_enabled then
+    nmap(Modes.Normal, "<leader>T", '<CMD>ToggleTerm direction=horizontal<CR>', { desc = '[T]erminal' })
+    nmap(Modes.Normal, "<leader>tf", '<CMD>ToggleTerm direction=float<CR>', { desc = '[T]erminal [F]loat' })
+    nmap(Modes.Normal, '<leader>th', '<CMD>ToggleTerm direction=horizontal<CR>', { desc = '[T]erminal [H]orizontal' })
+    nmap(Modes.Normal, '<leader>tv', '<CMD>ToggleTerm direction=vertical<CR>', { desc = '[T]erminal [V]ertical' })
+    nmap(Modes.Normal, '<leader>td', '<CMD>ToggleTerm direction=horizontal size=10<CR>', { desc = '[T]erminal [D]ebug' })
+end
+
+-- File tree --
+if config.Plugins.explorer == 'neo-tree' then
+    nmap(Modes.Normal, '<leader>E', '<CMD>Neotree toggle<CR>', { desc = '[E]xplorer' })
+    nmap(Modes.Normal, '<leader>er', '<CMD>Neotree float right<CR>', { desc = '[E]xplorer [R]ight' })
+    nmap(Modes.Normal, '<leader>el', '<CMD>Neotree float left<CR>', { desc = '[E]xplorer [L]eft' })
+    nmap(Modes.Normal, '<leader>ec', '<CMD>Neotree float center<CR>', { desc = '[E]xplorer [C]enter' })
+end
+
+-- Buffer lines --
+if config.Plugins.bufferline == 'barbar' then
+    nmap(Modes.Normal, "<Tab>", "<CMD>BufferNext<CR>", { desc = "[Tab] Next Buffer" })
+    nmap(Modes.Normal, "<S-Tab>", "<CMD>BufferPrev<CR>", { desc = "[S-Tab] Previous Buffer" })
+elseif config.Plugins.bufferline == "nvim-bufferline" then
+    nmap(Modes.Normal, "<Tab>", "<CMD>BufferLineCycleNext<CR>", { desc = "[Tab] Next Buffer" })
+    nmap(Modes.Normal, "<S-Tab>", "<CMD>BufferLineCyclePrev<CR>", { desc = "[S-Tab] Previous Buffer" })
+end
+
+-- Trouble (Errors) --
+if config.Plugins.trouble_enabled then
+    nmap(Modes.Normal, "<leader>xd",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        { desc = "Trouble [d]iagnostics (Global)" })
+    nmap(Modes.Normal, "<leader>xD",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        { desc = "Trouble [D]iagnostics (Buffer)" })
+    nmap(Modes.Normal, "<leader>xs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        { desc = "Trouble [S]ymbols" })
+    nmap(Modes.Normal, "<leader>xl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        { desc = "Trouble [L]SP Info" })
+    nmap(Modes.Normal, "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        { desc = "Trouble [L]ocation List" })
+    nmap(Modes.Normal, "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        { desc = "Trouble [Q]uickfix list" })
+end

@@ -14,7 +14,11 @@ Config.Options = {
     ---Leader keybind
     --- Default: ' ' (Space)
     leader = ' ',
+    ---Enable default LSP plugins 
+    --- Default: true
     enable_lsp = true,
+    --- LSP indicator messages
+    fidget = true,
     ---Colorscheme (nullable)
     --- Default: Catppuccin Macchiato
     colorscheme = 'catppuccin'
@@ -27,7 +31,7 @@ Config.Plugins = {
     ---  Default: 'alpha'
     dashboard = "alpha",
     --- Allowed values: 'neo-tree' | 'nvim-tree'
-    ---  Default: 'neotree'
+    ---  Default: 'neo-tree'
     explorer = "neo-tree",
     --- Allowed values: 'lualine' | 'sttusline'
     ---  Default: 'lualine'
@@ -39,27 +43,27 @@ Config.Plugins = {
     --- Allowed values: 'nvim-bufferline' | 'buffertabs' | 'barbar'
     ---  Default: 'nvim-bufferline'
     bufferline = 'nvim-bufferline',
-    --- Allowed values: true | false
-    ---  Default: true
+
     autopairs_enabled = true,
-    --- Allowed values: true | false
-    ---  Default: true
+    --- Breadcrumbs (eg config.lua > Config.Plugins)
     dropbar_enabled = true,
-    --- Allowed values: true | false
-    ---  Default: true
+    --- Better integrated terminal
     toggleterm_enabled = true,
-    --- Allowed values: true | false
-    --- Default: true
+    --- Git integration for the buffer's sidebar 
     gitsigns_enabled = true,
-    --- Allowed values: true | false
-    --- Default: true
+    --- Language parsing 
     treesitter_enabled = true,
-    --- Allowed values: true | false
-    --- Default: true
+    --- Finder for pretty much everything 
     telescope_enabled = true,
-    --- Allowed values: true | false
-    --- Default: true
+
     inlayhints_enabled = true,
+    --- Show errors on line hover
+    inline_diagnostics = true,
+    --- Better markdown rendering 
+    markdown_enabled = true,
+    --- LSP diagnostic viewer
+    trouble_enabled = true,
+
 }
 
 return Config
