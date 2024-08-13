@@ -1,0 +1,183 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 41,
+  "modules-left": [
+    "clock",
+    "hyprland/workspaces",
+    "tray",
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "bluetooth",
+    "network",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "custom/launch_wlogout"
+  ],
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{player_icon} <i>{dynamic}</i>",
+    "interval": 1,
+    "dynamic-order": [
+      "title",
+      "position",
+      "length"
+    ],
+    "player-icons": {
+      "default": "▶",
+      "mpd": "🎵"
+    },
+    //"status-icons": {
+    //  "paused": "⏸"
+    //},
+        "max-length": 20,
+    "ignored-players": ["vlc"]
+  },
+  "hyprland/window": {
+    "icon": true,
+    "icon-size": 18,
+    "max-length": 30,
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
+  },
+  "memory": {
+    "format": " {percentage}%",
+    "tooltip": false
+  },
+  "workspace": {
+    "format": " {}",
+    "disable-scroll": false
+  },
+    "battery": {
+    "interval": 60,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "max-length": 25
+},
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+        "all-outputs": true,
+        "persistent-workspaces": {
+            "*": 10,
+        },
+        "format": "{icon}",
+    "on-click": "activate"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "clock": {
+    "format": " {:%H:%M}",
+    "format-alt": " {:%A, %B %d, %Y (%R)}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "left",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><i><b>{}</b></i></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "tooltip": false,
+    "format-muted": " Muted",
+    "on-click": "pamixer -t",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": " Muted",
+    "on-click": "pamixer --default-source -t",
+    "on-scroll-up": "pamixer --default-source -i 5",
+    "on-scroll-down": "pamixer --default-source -d 5",
+    "scroll-step": 5
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": " ",
+      "deactivated": " "
+    },
+    "tooltip": false
+  },
+  "temperature": {
+    "thermal-zone": 1,
+    "format": " {temperatureC}°C",
+    "critical-threshold": 80,
+    "format-critical": " {temperatureC}°C"
+  },
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "format-wifi": "  {essid}",
+    "format-ethernet": "{ipaddr}/{cidr}",
+    "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "Disconnected ⚠",
+    "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{device_alias}",
+    "tooltip-format-connected": " {device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}"
+  },
+  "custom/launch_fuzzel": {
+    "format": "󰀻",
+    "on-click": "pkill rofi; rofi -show drun",
+    "tooltip": false
+  },
+  "custom/launch_wlogout": {
+    "format": "⏻",
+    "on-click": "wlogout",
+    "tooltip": false
+  },
+}

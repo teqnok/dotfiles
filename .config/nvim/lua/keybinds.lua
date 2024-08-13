@@ -13,13 +13,14 @@ local wk = require("which-key")
 
 wk.add({
     { "<leader>n", "<CMD>nohlsearch<CR>",        desc = "Stop search",                mode = Modes.Normal },
-    { "<leader>L", "<CMD>Lazy<CR>",              desc = "Lazy",                        mode = Modes.Normal },
-    { "d",         '"ad',                        desc = 'Delete to "a',                mode = { Modes.Normal, Modes.Visual }, noremap = true },
+    { "<leader>L", "<CMD>Lazy<CR>",              desc = "Lazy",                       mode = Modes.Normal },
+    { "d",         '"ad',                        desc = 'Delete to "a',               mode = { Modes.Normal, Modes.Visual }, noremap = true },
+    { "<leader>S", "ggVG",                       desc = 'Select All',                 mode = { Modes.Normal, Modes.Visual }, noremap = true },
     { "<leader>p", '"ap',                        desc = "Paste from deletion buffer", mode = { Modes.Normal, Modes.Visual }, noremap = true },
-    { ";",         "<CMD>Telescope cmdline<CR>", desc = "Cmdline",                     mode = { Modes.Normal },               noremap = true },
+    { ";",         "<CMD>Telescope cmdline<CR>", desc = "Cmdline",                    mode = { Modes.Normal },               noremap = true },
     -- LSP
     config.Options.enable_lsp and {
-        { "<leader>q",  function() vim.lsp.buf.format() end,                      desc = "Format",      mode = Modes.Normal },
+        { "<leader>q",  function() vim.lsp.buf.format() end,                      desc = "Format",       mode = Modes.Normal },
         { "<leader>ca", function() require("tiny-code-action").code_action() end, desc = " Code Action", mode = Modes.Normal, noremap = true, silent = true }
     },
 

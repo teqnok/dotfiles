@@ -13,6 +13,12 @@ if config.Plugins.explorer == 'neo-tree' then
         config = function()
             require("neo-tree").setup({
                 source_selector = {
+                    sources = {
+                        { source = "filesystem" },
+                        { source = "buffers" },
+                        { source = "git_status" },
+                    },
+                    -- tabs_layout = "center",
                     winbar = true,
                 },
                 close_if_last_window = true,
