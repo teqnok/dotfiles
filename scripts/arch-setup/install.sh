@@ -7,7 +7,7 @@ sudo pacman -S --needed kitty jq fd fzf tree \
     fastfetch fish zsh tmux man-db less zoxide wget unzip neovim \
     tree-sitter-cli mpd mpv ncmpcpp lsd eza htop bat \
     brightnessctl bluez-utils sof-firmware sway waybar \
-    wlr-randr networkmanager nm-applet dunst git go \
+    wlr-randr networkmanager dunst git go \
     vlc firefox ttf-jetbrains-mono-nerd hyprland hyprlock hyprpaper qt6ct rofi-wayland \
     dolphin qt6-wayland papirus-icon-theme flatpak
 # --
