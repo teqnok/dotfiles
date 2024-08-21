@@ -6,6 +6,7 @@ return {
             require('which-key').setup(
                 {
                     preset = "helix",
+                    delay = 0,
                 }
             )
             -- Document existing key chains
