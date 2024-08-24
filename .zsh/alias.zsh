@@ -20,3 +20,32 @@ alias getpkg="sudo pacman -S"
 alias delpkg="sudo pacman -R"
 alias Delpkg="sudo pacman -Rns" 
 alias catpkg="yay -Si"
+function findpkg() {
+    pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | while read -r pkg; do
+    action=$(echo -e "Install\nRemove\nUpdate\nReinstall" | fzf --prompt "Choose action for $pkg:")
+
+    case "$action" in
+        "Install")
+            echo "Installing $pkg..."
+            sudo pacman -S "$pkg"
+            ;;
+        "Remove")
+            echo "Removing $pkg..."
+            sudo pacman -R "$pkg"
+            ;;
+        "Update")
+            echo "Updating $pkg..."
+            sudo pacman -Syu "$pkg"
+            ;;
+        "Reinstall")
+            echo "Reinstalling $pkg..."
+            sudo pacman -S --overwrite "$pkg"
+            ;;
+        *)
+            echo "No action selected or invalid action."
+            ;;
+    esac
+done
+}
+
+alias fdpkg=findpkg

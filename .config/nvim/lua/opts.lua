@@ -45,7 +45,6 @@ vim.opt.shiftwidth = 4
 -- And convert tabs to spaces
 vim.opt.expandtab = true
 
-
 vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
