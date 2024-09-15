@@ -33,7 +33,7 @@ wk.add({
     },
 
     { "<leader>dw",  "<CMD>w<CR>",                  desc = " Document Write",       mode = Modes.Normal },
-    { "<leader>dc",  "<CMD>bdelete<CR>",            desc = " Document Close",       mode = Modes.Normal },
+    { "<leader>dc",  "<CMD>bp|bd#<CR>",            desc = " Document Close",       mode = Modes.Normal },
 
     -- Window management
     { "<C-Left>",    "<CMD>wincmd h<CR>",           desc = " Move to left window",  mode = Modes.Normal },

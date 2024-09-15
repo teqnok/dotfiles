@@ -3,45 +3,45 @@ local Config = {}
 
 Config.Options = {
     ---Relative line numbers (asc/descending from cursor)
-    --- Default: true
+    --- recommended: true
     relativenumber = true,
     ---Line numbers
-    --- Default: true
+    --- recommended: true
     number = true,
-    ---Enable tmux integration keybinds
-    --- Default: false
+    ---Enable tmux integration keybinds (along with <C-h/j/k/l> for split navigation)
+    --- recommended: false
     tmux_integration = true,
     ---Leader keybind
-    --- Default: ' ' (Space)
+    --- recommended: ' ' (Space)
     leader = ' ',
     ---Enable default LSP plugins 
-    --- Default: true
+    --- recommended: true
     enable_lsp = true,
     --- LSP indicator messages
     fidget = true,
     ---Colorscheme (nullable)
-    --- Default: Catppuccin Macchiato
+    --- recommended: Catppuccin Macchiato
     colorscheme = 'catppuccin'
 }
 Config.Plugins = {
     --- Allowed values: 'nvim-cmp' | 'coq_nvim'
-    ---  Default: 'nvim-cmp'
+    ---  recommended: 'nvim-cmp'
     completion = "nvim-cmp",
     --- Allowed values: 'alpha' | 'dashboard-nvim'
-    ---  Default: 'alpha'
+    ---  recommended: 'alpha'
     dashboard = "alpha",
     --- Allowed values: 'neo-tree' | 'nvim-tree'
-    ---  Default: 'neo-tree'
+    ---  recommended: 'neo-tree'
     explorer = "neo-tree",
     --- Allowed values: 'lualine' | 'sttusline'
-    ---  Default: 'lualine'
+    ---  recommended: 'lualine'
     statusline = 'lualine',
     --- Allowed values: 'copilot' | 'codeium'
-    ---  Default: 'copilot'
+    ---  recommended: 'copilot'
     ---  NOTE: Copilot requires a paid subscription
     copilot = 'copilot',
     --- Allowed values: 'nvim-bufferline' | 'buffertabs' | 'barbar'
-    ---  Default: 'nvim-bufferline'
+    ---  recommended: 'nvim-bufferline'
     bufferline = 'nvim-bufferline',
 
     autopairs_enabled = true,

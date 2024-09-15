@@ -1,6 +1,6 @@
 return {
   'folke/trouble.nvim',
-  cmd = 'TroubleToggle',
+  cmd = 'Trouble',
   config = function()
     require('trouble').setup {
       auto_preview = false,
