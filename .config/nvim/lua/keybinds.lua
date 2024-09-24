@@ -21,7 +21,7 @@ wk.add({
     -- LSP
     config.Options.enable_lsp and {
         { "<leader>q",  function() vim.lsp.buf.format() end,                      desc = "Format",       mode = Modes.Normal },
-        { "<leader>ca", function() require("tiny-code-action").code_action() end, desc = " Code Action", mode = Modes.Normal, noremap = true, silent = true }
+        { "<leader>a", function() vim.lsp.buf.code_action() end, desc = " Code Action", mode = Modes.Normal, noremap = true, silent = true }
     },
 
     -- Telescope
