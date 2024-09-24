@@ -24,7 +24,7 @@ if config.Plugins.statusline == 'lualine' then
                     },
                 },
                 sections = {
-                    lualine_a = { 'mode' },
+                    lualine_a = { {'mode', fmt = function(res) return res:sub(1,1) end} },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
                     lualine_c = { 'filename' },
                     lualine_x = { 'encoding', 'fileformat', 'filetype' },

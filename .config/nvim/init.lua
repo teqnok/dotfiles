@@ -10,4 +10,3 @@ require 'opts'
 
 -- [[ Basic Keymaps ]]
 require 'keybinds'
-

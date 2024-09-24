@@ -7,8 +7,8 @@ if config.Plugins.dashboard == "alpha" then
       local alpha = require 'alpha'
       local dashboard = require 'alpha.themes.dashboard'
       dashboard.section.header.val = {
-        [[                       _           ]],
-        [[                      (_)          ]],
+        [[                                   ]],
+        [[                      ( )          ]],
         [[ _ __   ___  _____   ___ _ __ ___  ]],
         [[| '_ \ / _ \/ _ \ \ / / | '_ ` _ \ ]],
         [[| | | |  __/ (_) \ V /| | | | | | |]],

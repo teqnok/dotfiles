@@ -68,17 +68,17 @@ wk.add({
         { "<leader>el", "<CMD>Neotree float left<CR>",   desc = "Explorer Left",   mode = Modes.Normal },
         { "<leader>ec", "<CMD>Neotree float center<CR>", desc = "Explorer Center", mode = Modes.Normal }
     } or config.Plugins.explorer == 'nvim-tree' and {
-        { "<leader>E", "<CMD>NvimTreeToggle<CR>", desc = "Explorer", mode = Modes.Normal },
-    },
+            { "<leader>E", "<CMD>NvimTreeToggle<CR>", desc = "Explorer", mode = Modes.Normal },
+        },
 
     -- Buffer lines
     config.Plugins.bufferline == 'barbar' and {
         { "<Tab>",   "<CMD>BufferNext<CR>", desc = "Next Buffer",     mode = Modes.Normal },
         { "<S-Tab>", "<CMD>BufferPrev<CR>", desc = "Previous Buffer", mode = Modes.Normal }
     } or config.Plugins.bufferline == "nvim-bufferline" and {
-        { "<Tab>",   "<CMD>BufferLineCycleNext<CR>", desc = "Next Buffer",     mode = Modes.Normal },
-        { "<S-Tab>", "<CMD>BufferLineCyclePrev<CR>", desc = "Previous Buffer", mode = Modes.Normal }
-    },
+            { "<Tab>",   "<CMD>BufferLineCycleNext<CR>", desc = "Next Buffer",     mode = Modes.Normal },
+            { "<S-Tab>", "<CMD>BufferLineCyclePrev<CR>", desc = "Previous Buffer", mode = Modes.Normal }
+        },
 
     -- Trouble (Errors)
     config.Plugins.trouble_enabled and {
@@ -90,3 +90,4 @@ wk.add({
         { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Trouble Quickfix list",        mode = Modes.Normal }
     }
 })
+
