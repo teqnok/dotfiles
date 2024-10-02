@@ -29,20 +29,20 @@ Config.Plugins = {
     completion = "nvim-cmp",
     --- Allowed values: 'alpha' | 'dashboard-nvim'
     ---  recommended: 'alpha'
-    dashboard = "alpha",
+    dashboard = "nil",
     --- Allowed values: 'neo-tree' | 'nvim-tree'
     ---  recommended: 'neo-tree'
     explorer = "neo-tree",
     --- Allowed values: 'lualine' | 'sttusline'
     ---  recommended: 'lualine'
-    statusline = 'lualine',
+    statusline = 'nil',
     --- Allowed values: 'copilot' | 'codeium'
     ---  recommended: 'copilot'
     ---  NOTE: Copilot requires a paid subscription
     copilot = 'copilot',
     --- Allowed values: 'nvim-bufferline' | 'buffertabs' | 'barbar'
     ---  recommended: 'nvim-bufferline'
-    bufferline = 'nvim-bufferline',
+    bufferline = 'nil',
 
     autopairs_enabled = true,
     --- Breadcrumbs (eg config.lua > Config.Plugins)
@@ -63,6 +63,8 @@ Config.Plugins = {
     markdown_enabled = true,
     --- LSP diagnostic viewer
     trouble_enabled = true,
+
+    nvui_enabled = true,
 
 }
 

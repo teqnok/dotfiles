@@ -10,3 +10,4 @@ require 'opts'
 
 -- [[ Basic Keymaps ]]
 require 'keybinds'
+vim.cmd('Nvdash')

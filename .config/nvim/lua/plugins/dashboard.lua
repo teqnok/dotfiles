@@ -31,11 +31,14 @@ if config.Plugins.dashboard == "alpha" then
       alpha.setup(dashboard.config)
     end,
   }
-elseif Config.Plugins.dashboard == "dashboard-nvim" then
+else return {}
+end
+if Config.Plugins.dashboard == "dashboard-nvim" then
   return {
     'glepnir/dashboard-nvim',
     config = function()
       require('dashboard').setup()
     end
   }
+else return {}
 end
