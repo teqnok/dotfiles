@@ -4,7 +4,7 @@
 vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
 vim.opt.relativenumber = true
-vim.opt.pumheight = 10
+
 -- Enable mouse mode
 vim.opt.mouse = 'a'
 
@@ -55,9 +55,3 @@ vim.opt.scrolloff = 10
 
 -- Disable builtin virtual text 
 vim.diagnostic.config({virtual_text = false})
-
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end

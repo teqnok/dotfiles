@@ -1,14 +1,14 @@
 local options = {
 
-  -- base46 = {
-  --   theme = "catppuccin",
-  --   hl_add = {},
-  --   hl_override = {},
-  --   integrations = {},
-  --   changed_themes = {},
-  --   transparency = false,
-  --   theme_toggle = { "catppuccin", "one_light" },
-  -- },
+  base46 = {
+    theme = "catppuccin",
+    hl_add = {},
+    hl_override = {},
+    integrations = {},
+    changed_themes = {},
+    transparency = false,
+    theme_toggle = { "catppuccin", "one_light" },
+  },
 
   ui = {
     cmp = {
