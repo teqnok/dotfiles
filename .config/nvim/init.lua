@@ -6,6 +6,3 @@ vim.g.have_nerd_font = true
 require 'setup'
 -- [[ Setting options ]]
 require 'opts'
-
--- [[ Basic Keymaps ]]
-require 'keybinds'

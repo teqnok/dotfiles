@@ -7,7 +7,8 @@ vim.opt.relativenumber = true
 vim.opt.pumheight = 10
 -- Enable mouse mode
 vim.opt.mouse = 'a'
-
+-- Hide the command line's row when not in use
+vim.opt.cmdheight = 0
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
 -- Use the default system clipboard
