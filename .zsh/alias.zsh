@@ -20,11 +20,24 @@ alias getpkg="sudo pacman -S"
 alias delpkg="sudo pacman -R"
 alias Delpkg="sudo pacman -Rns" 
 alias catpkg="yay -Si"
+
+function presudo() {
+    BUFFER="sudo $BUFFER"
+    CURSOR+=5
+}
+zle -N presudo
+
+bindkey "^f" 'presudo'
 # gif made with vhs (github.com/charmbracelet/vhs)
 # dependencies: fzf
+function __get_package_list() {
+    pacman -Sl | while read -r repo name version; do
+            echo "$name $version | $repo"
+    done
+}
 function findpkg() {
     action=$(echo -e "Cancel\nUpdate System\nUpdate Mirrors\nManage Packages" | fzf --prompt "Choose an action: " -m)
-    
+
     case "$action" in
         "Update System")
             echo "Updating system..."
@@ -35,8 +48,9 @@ function findpkg() {
             sudo pacman -Sy
             ;;
         "Manage Packages")
-            selected_packages=$(pacman -Slq | fzf --multi --preview 'pacman -Si {1}' --prompt "Packages => ")
-            trimmed=$(echo "$selected_packages" | tr '\n' ' ')
+            # Use reformat_pacman_list to display and select packages
+            selected_packages=$(__get_package_list | fzf --multi --preview 'pacman -Si {1}' --prompt "Packages => ")
+            trimmed=$(echo "$selected_packages" | awk '{print $1}' | tr '\n' ' ')
             if [[ -z "$selected_packages" ]]; then
                 echo "No packages selected."
                 return
@@ -47,15 +61,15 @@ function findpkg() {
             case "$action" in
                 "Install")
                     echo "Installing packages..."
-                    echo "$selected_packages" | xargs -r sudo pacman -S --noconfirm
+                    echo "$trimmed" | xargs -r sudo pacman -S --noconfirm
                     ;;
                 "Remove")
                     echo "Removing packages..."
-                    echo "$selected_packages" | xargs -r sudo pacman -R --noconfirm
+                    echo "$trimmed" | xargs -r sudo pacman -R --noconfirm
                     ;;
                 "Reinstall")
                     echo "Reinstalling packages..."
-                    echo "$selected_packages" | xargs -r sudo pacman -S --overwrite --noconfirm
+                    echo "$trimmed" | xargs -r sudo pacman -S --overwrite --noconfirm
                     ;;
                 "Cancel")
                     echo "Operation cancelled."
@@ -74,4 +88,3 @@ function findpkg() {
     esac
 }
 
-alias fdpkg=findpkg

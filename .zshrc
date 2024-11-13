@@ -14,10 +14,11 @@ zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-completions
 autoload -U compinit && compinit
 
-bindkey -e
+bindkey -v
+bindkey '^[' vi-cmd-mode
 bindkey '^p' hist_search_backward
 bindkey '^n' hist_search_forward
-bindkey -s '^[e' "nvim"
+bindkey -s '^[e' "nvim "
 bindkey "^L" clear-screen
 # Ctrl + Left/Right 
 bindkey "^[[1;5D" forward-word
@@ -30,7 +31,7 @@ HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-
+KEYTIMEOUT=1
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -63,3 +64,10 @@ add-zsh-hook -Uz precmd terminal_title_precmd
 add-zsh-hook -Uz preexec terminal_title_preexec
 autoload -Uz compinit
 compinit
+
+# bun completions
+[ -s "/home/teqnok/.bun/_bun" ] && source "/home/teqnok/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
