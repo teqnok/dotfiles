@@ -8,6 +8,7 @@ config.window_padding = {
   top = 0,
   bottom = 0,
 }
+config.default_cursor_style = 'SteadyBar'
 config.color_scheme = 'catppuccin-mocha'
 config.enable_tab_bar = false
 

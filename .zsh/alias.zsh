@@ -28,8 +28,6 @@ function presudo() {
 zle -N presudo
 
 bindkey "^f" 'presudo'
-# gif made with vhs (github.com/charmbracelet/vhs)
-# dependencies: fzf
 function __get_package_list() {
     pacman -Sl | while read -r repo name version; do
             echo "$name $version | $repo"
