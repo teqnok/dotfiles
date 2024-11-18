@@ -45,6 +45,16 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 -- And convert tabs to spaces
 vim.opt.expandtab = true
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "c", "cpp" },
+    callback = function()
+        vim.bo.tabstop = 2
+        vim.bo.shiftwidth = 2
+        vim.bo.softtabstop = 2
+        vim.bo.expandtab = true
+    end,
+})
+
 
 vim.opt.inccommand = 'split'
 

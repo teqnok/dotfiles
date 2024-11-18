@@ -8,15 +8,15 @@
   "height": 41,
   "modules-left": [
     "clock",
-    "hyprland/workspaces",
+    "sway/workspaces",
     "tray",
   ],
   "modules-center": [
-    "hyprland/window"
+    "sway/window"
   ],
   "modules-right": [
     "pulseaudio",
-    "bluetooth",
+    //"bluetooth",
     "network",
     "cpu",
     "memory",
@@ -177,7 +177,7 @@
   },
   "custom/launch_wlogout": {
     "format": "⏻",
-    "on-click": "wlogout",
+    "on-click": "killall waybar; swaymsg exit",
     "tooltip": false
   },
 }
