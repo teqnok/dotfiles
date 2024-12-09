@@ -80,13 +80,15 @@ keybinds.main = {
     { "<Tab>",            "<CMD>BufferLineCycleNext<CR>",                               desc = "Next Buffer",                  mode = Modes.Normal },
     { "<S-Tab>",          "<CMD>BufferLineCyclePrev<CR>",                               desc = "Previous Buffer",              mode = Modes.Normal },
 
-
+    -- def not stolen X3
+    { "J",                ":m '>+1<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },
+    { "K",                ":m '<-2<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },
     -- Trouble (Errors)
     { "<leader>xd",       "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Trouble diagnostics (Global)", mode = Modes.Normal },
-    { "<leader>xD",       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Trouble Diagnostics (Buffer)", mode = Modes.Normal },
     { "<leader>xs",       "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Trouble Symbols",              mode = Modes.Normal },
     { "<leader>xl",       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Trouble LSP Info",             mode = Modes.Normal },
     { "<leader>xL",       "<cmd>Trouble loclist toggle<cr>",                            desc = "Trouble Location List",        mode = Modes.Normal },
+    { "<leader>xD",       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Trouble Diagnostics (Buffer)", mode = Modes.Normal },
     { "<leader>xQ",       "<cmd>Trouble qflist toggle<cr>",                             desc = "Trouble Quickfix list",        mode = Modes.Normal }
 }
 return keybinds
