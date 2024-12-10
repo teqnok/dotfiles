@@ -9,7 +9,7 @@ return {
                 lua_ls = {},
                 rust_analyzer = {},
                 clangd = {},
-                tsserver = {},
+                ts_ls = {},
                 csharp_ls = {},
             }
         },
@@ -128,10 +128,10 @@ return {
             pcall(require("telescope").load_extension, "fzf")
             pcall(require("telescope").load_extension, "ui-select")
         end,
-    },{
-  'stevearc/oil.nvim',
-  opts = {},
-  dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    }, {
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
 },
     {
         "nvim-lualine/lualine.nvim",
@@ -184,6 +184,25 @@ return {
             })
         end,
     },
+    -- {
+    --     'rachartier/tiny-inline-diagnostic.nvim',
+    --     event = 'VeryLazy',
+    --     config = function()
+    --         vim.opt.updatetime = 100
+    --         vim.diagnostic.config { virtual_text = false }
+    --         vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = '#f38ba8' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = '#fab387' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = '#cba6f7' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = '#f5c2e7' })
+    --         require('tiny-inline-diagnostic').setup {
+    --             preset = 'powerline',
+    --             options = {use_icons_from_diagnostic = true},
+    --             blend = {
+    --                 factor = 0.1,
+    --             },
+    --         }
+    --     end,
+    -- },
     {
         "lvimuser/lsp-inlayhints.nvim",
         config = function()
@@ -202,63 +221,6 @@ return {
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
                     require("lsp-inlayhints").on_attach(client, bufnr)
                 end,
-            })
-        end,
-    },
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("tiny-inline-diagnostic").setup({
-                signs = {
-                    left = "",
-                    right = "",
-                    diag = "●",
-                    arrow = "    ",
-                    up_arrow = "    ",
-                    vertical = " ",
-                    vertical_end = " ",
-                },
-                hi = {
-                    error = "DiagnosticError",
-                    warn = "DiagnosticWarn",
-                    info = "DiagnosticInfo",
-                    hint = "DiagnosticHint",
-                    arrow = "NonText",
-                    background = "CursorLine",
-                    mixing_color = "None",
-                },
-                blend = {
-                    factor = 0.27,
-                },
-                options = {
-                    show_source = true,
-                    throttle = 20,
-                    softwrap = 15,
-                    multilines = true,
-
-                    overflow = {
-                        mode = "wrap",
-                    },
-                    format = function(diagnostic)
-                        return diagnostic.message .. " [" .. diagnostic.source .. "]"
-                    end,
-                    break_line = {
-                        enabled = false,
-                        after = 30,
-                    },
-                    virt_texts = {
-                        priority = 2048,
-                    },
-                    severity = {
-                        vim.diagnostic.severity.ERROR,
-                        vim.diagnostic.severity.WARN,
-                        vim.diagnostic.severity.INFO,
-                        vim.diagnostic.severity.HINT,
-                    },
-
-                    overwrite_events = nil,
-                },
             })
         end,
     },

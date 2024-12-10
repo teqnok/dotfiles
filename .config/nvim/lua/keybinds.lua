@@ -29,6 +29,7 @@ keybinds.__pre =
     { "<leader>x_", hidden = true },
 }
 keybinds.main = {
+    { "H",                function() vim.diagnostic.open_float() end,                   { noremap = true, silent = true },     mode = Modes.Normal },
     { "<leader>n",        "<CMD>nohlsearch<CR>",                                        desc = "Stop search",                  mode = Modes.Normal },
     { "<leader>L",        "<CMD>Lazy<CR>",                                              desc = "Lazy",                         mode = Modes.Normal },
     { "d",                '"ad',                                                        desc = 'Delete to "a',                 mode = { Modes.Normal, Modes.Visual }, noremap = true },
@@ -60,7 +61,7 @@ keybinds.main = {
     { "<leader>sh",       "<CMD>split<CR>",                                             desc = " Split Horizontal",            mode = Modes.Normal },
     { "<leader>sv",       "<CMD>vs<CR>",                                                desc = " Split Vertical",              mode = Modes.Normal },
 
-    { "<leader>E",        "<CMD>Oil<CR>",                                    desc = "Explorer",                     mode = Modes.Normal },
+    { "<leader>E",        "<CMD>Oil<CR>",                                               desc = "Explorer",                     mode = Modes.Normal },
     { "<leader>er",       "<CMD>Neotree float right<CR>",                               desc = "Explorer Right",               mode = Modes.Normal },
     { "<leader>el",       "<CMD>Neotree float left<CR>",                                desc = "Explorer Left",                mode = Modes.Normal },
     { "<leader>ec",       "<CMD>Neotree float center<CR>",                              desc = "Explorer Center",              mode = Modes.Normal },
