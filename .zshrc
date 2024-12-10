@@ -64,11 +64,4 @@ add-zsh-hook -Uz precmd terminal_title_precmd
 add-zsh-hook -Uz preexec terminal_title_preexec
 autoload -Uz compinit
 compinit
-
-# bun completions
-[ -s "/home/teqnok/.bun/_bun" ] && source "/home/teqnok/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 export EDITOR=nvim

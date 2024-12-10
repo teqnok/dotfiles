@@ -4,6 +4,7 @@
 vim.opt.number = true
 -- You can also add relative line numbers, for help with jumping.
 vim.opt.relativenumber = true
+-- max number of items in the LSP completion menu
 vim.opt.pumheight = 10
 -- Enable mouse mode
 vim.opt.mouse = 'a'
@@ -31,6 +32,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 100
 
+vim.g.netrw_banner = 0
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -38,7 +40,6 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace in the editor.
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 -- Set tab width to 4 instead of 8
 vim.opt.tabstop = 4
 -- Set each indentation level to also use 4
@@ -54,10 +55,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.expandtab = true
     end,
 })
-
-
 vim.opt.inccommand = 'split'
-
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 

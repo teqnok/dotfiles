@@ -5,7 +5,6 @@ export FZF_DEFAULT_OPTS=" \
 
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
-. "$HOME/.cargo/env"
 
 alias cd='z'
 alias ..='cd ..'

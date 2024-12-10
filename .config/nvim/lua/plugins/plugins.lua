@@ -1,127 +1,57 @@
 return {
     {
-        {
-            "neovim/nvim-lspconfig",
-            event = { "BufAdd", "BufReadPre" },
-            dependencies = {
-                "williamboman/mason.nvim",
-                "williamboman/mason-lspconfig.nvim",
-                "WhoIsSethDaniel/mason-tool-installer.nvim",
-                "hrsh7th/cmp-nvim-lsp",
-                {
-                    "folke/neodev.nvim",
-                    opts = {},
-                },
-            },
-            config = function()
-                local capabilities = vim.lsp.protocol.make_client_capabilities()
-                capabilities =
-                    vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+        'neovim/nvim-lspconfig',
+        dependencies = { 'saghen/blink.cmp', "williamboman/mason.nvim", },
 
-                local servers = {
-                    rust_analyzer = {},
-
-                    lua_ls = {
-                        settings = {
-                            Lua = {
-                                completion = {
-                                    callSnippet = "Replace",
-                                },
-                                diagnostics = {
-                                    disable = { "missing-fields" },
-                                },
-                            },
-                        },
-                    },
-                }
-
-                require("mason").setup()
-
-                require("mason-lspconfig").setup({
-                    handlers = {
-                        function(server_name)
-                            local server = servers[server_name] or {}
-                            server.capabilities =
-                                vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                            require("lspconfig")[server_name].setup(server)
-                        end,
-                    },
-                })
-            end,
+        -- example using `opts` for defining servers
+        opts = {
+            servers = {
+                lua_ls = {},
+                rust_analyzer = {},
+                clangd = {},
+                tsserver = {},
+                csharp_ls = {},
+            }
         },
+        config = function(_, opts)
+            local lspconfig = require('lspconfig')
+            for server, config in pairs(opts.servers) do
+                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
+            end
+        end
     },
     {
+        'saghen/blink.cmp',
+        lazy = false,
+        dependencies = 'rafamadriz/friendly-snippets',
 
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        priority = 1000,
-        dependencies = {
-            -- Snippet Engine & its associated nvim-cmp source
-            {
-                "L3MON4D3/LuaSnip",
-                build = (function()
-                    if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-                        return
-                    end
-                    return "make install_jsregexp"
-                end)(),
+        version = 'v0.*',
+        opts = {
+            keymap = { preset = 'enter' },
+
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono'
             },
-            "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-path",
-            "rafamadriz/friendly-snippets",
-            "onsails/lspkind.nvim",
-        },
-        config = function()
-            local cmp = require("cmp")
-            local luasnip = require("luasnip")
-            luasnip.config.setup({})
-            cmp.setup({
-                window = {
-                    documentation = { max_height = 15 },
-                    completion = {
-                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-                        col_offset = 1,
-                        side_padding = 0,
+            sources = {
+                completion = {
+                    enabled_providers = { 'lsp', 'path', 'snippets', 'buffer' },
+                },
+            },
+
+            completion = {
+                menu = {
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "kind" } },
                     },
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-.>"] = cmp.mapping.select_next_item(),
-                    ["<C-,>"] = cmp.mapping.select_prev_item(),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                }),
-                formatting = {
-                    fields = { "kind", "abbr", "menu" },
-                    format = function(entry, vim_item)
-                        local kind =
-                            require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
-                        kind.kind = " " .. (strings[1] or "") .. " "
-                        kind.menu = "<" .. (strings[2] or "") .. ">"
+                accept = { auto_brackets = { enabled = true } }
+            },
 
-                        return kind
-                    end,
-                },
-                sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "vsnip" },
-                    { name = "luasnip" },
-                }, {
-                    { name = "buffer" },
-                }),
-            })
-            vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#5b6078", fg = "#cad3f5" })
-            vim.api.nvim_set_hl(0, "Pmenu", { bg = "#363a4f", fg = "#cad3f5" })
-
-            vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#939ab7", bg = "NONE", strikethrough = true })
-            vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#8aadf4", bg = "NONE", bold = true })
-            vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#8aadf4", bg = "NONE", bold = true })
-            vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#f5bde6", bg = "NONE", italic = true })
-        end,
+            signature = { enabled = true }
+        },
+        opts_extend = { "sources.completion.enabled_providers" }
     },
     {
         "nvim-treesitter/nvim-treesitter",
@@ -162,36 +92,6 @@ return {
 
         dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     },
-    -- {
-    -- 	"Bekaboo/dropbar.nvim",
-    -- 	dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
-    -- },
-    -- {
-    -- 	"nvim-neo-tree/neo-tree.nvim",
-    -- 	branch = "v3.x",
-    -- 	event = "VeryLazy",
-    -- 	dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
-    -- 	config = function()
-    -- 		require("neo-tree").setup({
-    -- 			source_selector = {
-    -- 				sources = {
-    -- 					{
-    -- 						source = "filesystem",
-    -- 					},
-    -- 					{
-    -- 						source = "buffers",
-    -- 					},
-    -- 					{
-    -- 						source = "git_status",
-    -- 					},
-    -- 				},
-    -- 				-- tabs_layout = "center",
-    -- 				winbar = true,
-    -- 			},
-    -- 			close_if_last_window = true,
-    -- 		})
-    -- 	end,
-    -- },
     {
         "folke/which-key.nvim",
         event = "VimEnter",
@@ -228,7 +128,11 @@ return {
             pcall(require("telescope").load_extension, "fzf")
             pcall(require("telescope").load_extension, "ui-select")
         end,
-    },
+    },{
+  'stevearc/oil.nvim',
+  opts = {},
+  dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+},
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons", opt = false },
@@ -280,7 +184,6 @@ return {
             })
         end,
     },
-    { "akinsho/toggleterm.nvim", version = "*", config = true },
     {
         "lvimuser/lsp-inlayhints.nvim",
         config = function()
@@ -464,7 +367,7 @@ return {
                     dark = "mocha",
                 },
                 transparent_background = false, -- disables setting the background color.
-                show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+                show_end_of_buffer = false,     -- shows the '~' characters after the end of buffers
                 dim_inactive = {
                     enabled = false,
                     shade = "dark",

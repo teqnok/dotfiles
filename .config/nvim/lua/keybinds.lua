@@ -21,11 +21,8 @@ keybinds.__pre =
     { "<leader>f", group = "Telescope" },
     { "<leader>f_", hidden = true },
     { "<leader>s", group = "Search" },
-    { "<leader>e", group = "Explorer", icon = { icon = "󰪶", color = "green" } },
     { "<leader>e_", hidden = true },
     { "<leader>s_", hidden = true },
-    { "<leader>t", group = "Terminal" },
-    { "<leader>t_", hidden = true },
     { "<leader>w", group = "Workspace" },
     { "<leader>w_", hidden = true },
     { "<leader>x", group = "Trouble", icon = { icon = " ", color = "orange" } },
@@ -63,15 +60,7 @@ keybinds.main = {
     { "<leader>sh",       "<CMD>split<CR>",                                             desc = " Split Horizontal",            mode = Modes.Normal },
     { "<leader>sv",       "<CMD>vs<CR>",                                                desc = " Split Vertical",              mode = Modes.Normal },
 
-    -- Terminal
-
-    { "<leader>T",        "<CMD>ToggleTerm direction=horizontal<CR>",                   desc = "Terminal",                     mode = Modes.Normal },
-    { "<leader>tf",       "<CMD>ToggleTerm direction=float<CR>",                        desc = "Float (center)",               mode = Modes.Normal },
-    { "<leader>th",       "<CMD>ToggleTerm direction=horizontal<CR>",                   desc = "Bottom",                       mode = Modes.Normal },
-    { "<leader>tv",       "<CMD>ToggleTerm direction=vertical<CR>",                     desc = "Sidebar",                      mode = Modes.Normal },
-
-
-    { "<leader>E",        "<CMD>Neotree toggle<CR>",                                    desc = "Explorer",                     mode = Modes.Normal },
+    { "<leader>E",        "<CMD>Oil<CR>",                                    desc = "Explorer",                     mode = Modes.Normal },
     { "<leader>er",       "<CMD>Neotree float right<CR>",                               desc = "Explorer Right",               mode = Modes.Normal },
     { "<leader>el",       "<CMD>Neotree float left<CR>",                                desc = "Explorer Left",                mode = Modes.Normal },
     { "<leader>ec",       "<CMD>Neotree float center<CR>",                              desc = "Explorer Center",              mode = Modes.Normal },
