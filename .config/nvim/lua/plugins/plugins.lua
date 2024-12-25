@@ -15,7 +15,7 @@ return {
         },
         config = function(_, opts)
             local lspconfig = require('lspconfig')
-            -- luals doesnt see the vim global 
+            -- luals doesnt see the vim global
             lspconfig.lua_ls.setup {
                 settings = {
                     Lua = {
@@ -164,17 +164,15 @@ return {
                     } },
                     lualine_b = { "branch", "diff", "diagnostics" },
                     lualine_c = { "filename" },
-                    lualine_x = { "encoding", "fileformat", "filetype" },
-                    lualine_y = { "lsp_progress" },
+                    lualine_x = { "fileformat", "filetype" },
+                    lualine_y = { function()
+                        local client_text = ""
+                        for _, client in ipairs(vim.lsp.get_clients()) do
+                            client_text = "LSP: " .. client_text .. client.name
+                        end
+                        return client_text
+                    end, },
                     lualine_z = { "location" },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {},
-                    lualine_x = { "location" },
-                    lualine_y = {},
-                    lualine_z = {},
                 },
                 tabline = {},
                 winbar = {},
