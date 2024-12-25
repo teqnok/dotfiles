@@ -64,6 +64,7 @@ vim.opt.scrolloff = 10
 
 -- Disable builtin virtual text 
 vim.diagnostic.config({virtual_text = false})
+-- vim.lsp.inlay_hint.enable(true)
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 for type, icon in pairs(signs) do

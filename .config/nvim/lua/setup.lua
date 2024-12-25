@@ -1,5 +1,5 @@
 local builtins = {"2html_plugin", "getscript", "getscriptPlugin", "gzip"}
-for i, name in ipairs(builtins) do
+for i, _ in ipairs(builtins) do
     vim.g['loaded_' .. builtins[i]]= true
 end
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -13,6 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 require 'lazy'.setup({
   spec = {
     import = "plugins"
-  }
+  },
+  change_detection = {
+    enabled = false,
+    notify = false,
+  },
 })
 

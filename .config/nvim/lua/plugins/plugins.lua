@@ -6,15 +6,31 @@ return {
         -- example using `opts` for defining servers
         opts = {
             servers = {
-                lua_ls = {},
+                pyright = {},
                 rust_analyzer = {},
                 clangd = {},
-                tsserver = {},
+                ts_ls = {},
                 csharp_ls = {},
             }
         },
         config = function(_, opts)
             local lspconfig = require('lspconfig')
+            -- luals doesnt see the vim global 
+            lspconfig.lua_ls.setup {
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = {
+                                'vim',
+                                'require'
+                            },
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                    },
+                },
+            }
             for server, config in pairs(opts.servers) do
                 config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
@@ -34,11 +50,6 @@ return {
                 use_nvim_cmp_as_default = true,
                 nerd_font_variant = 'mono'
             },
-            sources = {
-                completion = {
-                    enabled_providers = { 'lsp', 'path', 'snippets', 'buffer' },
-                },
-            },
 
             completion = {
                 menu = {
@@ -47,6 +58,10 @@ return {
                     },
                 },
                 accept = { auto_brackets = { enabled = true } }
+            },
+            sources = {
+                default = { 'lsp', 'path', 'snippets' },
+                cmdline = {},
             },
 
             signature = { enabled = true }
@@ -107,32 +122,16 @@ return {
         end,
     },
     {
-        "nvim-telescope/telescope.nvim",
-        event = "VimEnter",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "make",
-                cond = function()
-                    return vim.fn.executable("make") == 1
-                end,
-            },
-            { "nvim-telescope/telescope-ui-select.nvim" },
-
-            { "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
-        },
+        "ibhagwan/fzf-lua",
         config = function()
-            pcall(require("telescope").load_extension, "cmdline")
-            pcall(require("telescope").load_extension, "fzf")
-            pcall(require("telescope").load_extension, "ui-select")
-        end,
-    },{
-  'stevearc/oil.nvim',
-  opts = {},
-  dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-},
+            require("fzf-lua").setup({ "max-perf" })
+        end
+    },
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons", opt = false },
@@ -151,7 +150,7 @@ return {
                     always_divide_middle = true,
                     globalstatus = false,
                     refresh = {
-                        statusline = 1000,
+                        statusline = 10,
                         tabline = 1000,
                         winbar = 1000,
                     },
@@ -184,84 +183,46 @@ return {
             })
         end,
     },
-    {
-        "lvimuser/lsp-inlayhints.nvim",
-        config = function()
-            require("lsp-inlayhints").setup()
-        end,
-        init = function()
-            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = "LspAttach_inlayhints",
-                callback = function(args)
-                    if not (args.data and args.data.client_id) then
-                        return
-                    end
-
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr)
-                end,
-            })
-        end,
-    },
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("tiny-inline-diagnostic").setup({
-                signs = {
-                    left = "",
-                    right = "",
-                    diag = "●",
-                    arrow = "    ",
-                    up_arrow = "    ",
-                    vertical = " ",
-                    vertical_end = " ",
-                },
-                hi = {
-                    error = "DiagnosticError",
-                    warn = "DiagnosticWarn",
-                    info = "DiagnosticInfo",
-                    hint = "DiagnosticHint",
-                    arrow = "NonText",
-                    background = "CursorLine",
-                    mixing_color = "None",
-                },
-                blend = {
-                    factor = 0.27,
-                },
-                options = {
-                    show_source = true,
-                    throttle = 20,
-                    softwrap = 15,
-                    multilines = true,
-
-                    overflow = {
-                        mode = "wrap",
-                    },
-                    format = function(diagnostic)
-                        return diagnostic.message .. " [" .. diagnostic.source .. "]"
-                    end,
-                    break_line = {
-                        enabled = false,
-                        after = 30,
-                    },
-                    virt_texts = {
-                        priority = 2048,
-                    },
-                    severity = {
-                        vim.diagnostic.severity.ERROR,
-                        vim.diagnostic.severity.WARN,
-                        vim.diagnostic.severity.INFO,
-                        vim.diagnostic.severity.HINT,
-                    },
-
-                    overwrite_events = nil,
-                },
-            })
-        end,
-    },
+    -- {
+    --     'rachartier/tiny-inline-diagnostic.nvim',
+    --     event = 'VeryLazy',
+    --     config = function()
+    --         vim.opt.updatetime = 100
+    --         vim.diagnostic.config { virtual_text = false }
+    --         vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = '#f38ba8' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = '#fab387' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = '#cba6f7' })
+    --         vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = '#f5c2e7' })
+    --         require('tiny-inline-diagnostic').setup {
+    --             preset = 'powerline',
+    --             options = {use_icons_from_diagnostic = true},
+    --             blend = {
+    --                 factor = 0.1,
+    --             },
+    --         }
+    --     end,
+    -- },
+    -- {
+    --     "lvimuser/lsp-inlayhints.nvim",
+    --     config = function()
+    --         require("lsp-inlayhints").setup()
+    --     end,
+    --     init = function()
+    --         vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+    --         vim.api.nvim_create_autocmd("LspAttach", {
+    --             group = "LspAttach_inlayhints",
+    --             callback = function(args)
+    --                 if not (args.data and args.data.client_id) then
+    --                     return
+    --                 end
+    --
+    --                 local bufnr = args.buf
+    --                 local client = vim.lsp.get_client_by_id(args.data.client_id)
+    --                 require("lsp-inlayhints").on_attach(client, bufnr)
+    --             end,
+    --         })
+    --     end,
+    -- },
     {
         "j-hui/fidget.nvim",
         config = function()
@@ -290,67 +251,6 @@ return {
                 changedelete = { text = "│" },
             },
         },
-    },
-    {
-        "akinsho/bufferline.nvim",
-        version = "*",
-        dependencies = "nvim-tree/nvim-web-devicons",
-        opts = {
-            options = {
-                diagnostics = "nvim_lsp",
-                always_show_bufferline = false,
-                offsets = {
-                    {
-                        filetype = "neo-tree",
-                        text = "Explorer",
-                        highlight = "Directory",
-                        text_align = "center",
-                    },
-                },
-            },
-        },
-        config = function(_, opts)
-            require("bufferline").setup(opts)
-            -- Fix bufferline when restoring a session
-            vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
-                callback = function()
-                    vim.schedule(function()
-                        pcall(nvim_bufferline)
-                    end)
-                end,
-            })
-        end,
-    },
-    {
-        "goolord/alpha-nvim",
-        config = function()
-            local alpha = require("alpha")
-            local dashboard = require("alpha.themes.dashboard")
-            dashboard.section.header.val = {
-                [[                                   ]],
-                [[                      ( )          ]],
-                [[ _ __   ___  _____   ___ _ __ ___  ]],
-                [[| '_ \ / _ \/ _ \ \ / / | '_ ` _ \ ]],
-                [[| | | |  __/ (_) \ V /| | | | | | |]],
-                [[|_| |_|\___|\___/ \_/ |_|_| |_| |_|]],
-                [[                                   ]],
-                [[          version 0.10.0           ]],
-            }
-            dashboard.section.buttons.val = {
-                dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-                dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
-                dashboard.button("t", "󰺮  Find text", ":Telescope live_grep<CR>"),
-                dashboard.button("u", "  Update plugins", ":Lazy update<CR>"),
-                dashboard.button("r", "  Recent", ":Telescope oldfiles<CR>"),
-                dashboard.button("l", "󰏖  Lazy", ":Lazy<CR>"),
-                dashboard.button("s", "  Settings", ":e $MYVIMRC | :cd %:p:h<CR>"),
-                dashboard.button("q", "󰅚  Quit", ":qa<CR>"),
-            }
-
-            dashboard.config.opts.noautocmd = true
-
-            alpha.setup(dashboard.config)
-        end,
     },
     {
         "catppuccin/nvim",
@@ -395,9 +295,5 @@ return {
             -- setup must be called before loading
             vim.cmd.colorscheme("catppuccin")
         end,
-    },
-    {
-        "github/copilot.vim",
-        config = function() end,
     },
 }

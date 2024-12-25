@@ -18,32 +18,31 @@ keybinds.__pre =
     { "<leader>d_", hidden = true },
     { "<leader>r", group = "Rename" },
     { "<leader>r_", hidden = true },
-    { "<leader>f", group = "Telescope" },
+    { "<leader>f", group = "Fzf" },
     { "<leader>f_", hidden = true },
     { "<leader>s", group = "Search" },
-    { "<leader>e_", hidden = true },
     { "<leader>s_", hidden = true },
     { "<leader>w", group = "Workspace" },
     { "<leader>w_", hidden = true },
     { "<leader>x", group = "Trouble", icon = { icon = " ", color = "orange" } },
     { "<leader>x_", hidden = true },
 }
+local fzf = require('fzf-lua')
 keybinds.main = {
+    { "H",                function() vim.diagnostic.open_float() end,                   { noremap = true, silent = true },     mode = Modes.Normal },
     { "<leader>n",        "<CMD>nohlsearch<CR>",                                        desc = "Stop search",                  mode = Modes.Normal },
     { "<leader>L",        "<CMD>Lazy<CR>",                                              desc = "Lazy",                         mode = Modes.Normal },
     { "d",                '"ad',                                                        desc = 'Delete to "a',                 mode = { Modes.Normal, Modes.Visual }, noremap = true },
     { "<leader>S",        "ggVG",                                                       desc = 'Select All',                   mode = { Modes.Normal, Modes.Visual }, noremap = true },
     { "<leader>p",        '"ap',                                                        desc = "Paste from deletion buffer",   mode = { Modes.Normal, Modes.Visual }, noremap = true },
-    -- { ";",         "<CMD>Telescope cmdline<CR>", desc = "Cmdline",                    mode = { Modes.Normal },               noremap = true },
     { "<leader>q",        function() vim.lsp.buf.format() end,                          desc = "Format",                       mode = Modes.Normal },
     { "<leader>R",        function() vim.lsp.buf.rename() end,                          desc = "Rename",                       mode = Modes.Normal,                   noremap = true, silent = true },
     { "<leader>a",        function() vim.lsp.buf.code_action() end,                     desc = " Code Action",                 mode = Modes.Normal,                   noremap = true, silent = true },
-    { "<leader><leader>", "<CMD>Telescope find_files<CR>",                              desc = "Find Files",                   mode = { Modes.Visual, Modes.Normal } },
-    { "<leader>F",        "<CMD>Telescope find_files<CR>",                              desc = "Find Files",                   mode = Modes.Normal },
-    { "<leader>ff",       "<CMD>Telescope find_files<CR>",                              desc = "Find Files",                   mode = Modes.Normal },
-    { "<leader>K",        "<CMD>Telescope keymaps<CR>",                                 desc = "Keymaps",                      mode = Modes.Normal },
-    { "<leader>fg",       "<CMD>Telescope live_grep<CR>",                               desc = "Find with Grep",               mode = Modes.Normal },
-    { "<leader>ds",       "<CMD>Telescope lsp_document_symbols<CR>",                    desc = " Document Symbols",            mode = Modes.Normal },
+    { "<leader><leader>", function() fzf.files() end,                                   desc = "Find Files",                   mode = { Modes.Visual, Modes.Normal } },
+    { "<leader>h",        function() fzf.buffers() end,                                 desc = "Find Buffers",                 mode = { Modes.Visual, Modes.Normal } },
+    { "<leader>ff",       function() fzf.files() end,                                   desc = "Find Files",                   mode = Modes.Normal },
+    { "<leader>fg",       function() fzf.live_grep() end,                               desc = "Find with Grep",               mode = Modes.Normal },
+    { "<leader>ds",       function() fzf.lsp_document_symbols() end,                    desc = " Document Symbols",            mode = Modes.Normal },
     { "<leader>dw",       "<CMD>w<CR>",                                                 desc = " Document Write",              mode = Modes.Normal },
     { "<leader>dc",       "<CMD>bp|bd#<CR>",                                            desc = " Document Close",              mode = Modes.Normal },
 
@@ -59,16 +58,8 @@ keybinds.main = {
 
     { "<leader>sh",       "<CMD>split<CR>",                                             desc = " Split Horizontal",            mode = Modes.Normal },
     { "<leader>sv",       "<CMD>vs<CR>",                                                desc = " Split Vertical",              mode = Modes.Normal },
-
-    { "<leader>E",        "<CMD>Oil<CR>",                                    desc = "Explorer",                     mode = Modes.Normal },
-    { "<leader>er",       "<CMD>Neotree float right<CR>",                               desc = "Explorer Right",               mode = Modes.Normal },
-    { "<leader>el",       "<CMD>Neotree float left<CR>",                                desc = "Explorer Left",                mode = Modes.Normal },
-    { "<leader>ec",       "<CMD>Neotree float center<CR>",                              desc = "Explorer Center",              mode = Modes.Normal },
-
-    -- Buffer lines
-    { "<Tab>",            "<CMD>BufferLineCycleNext<CR>",                               desc = "Next Buffer",                  mode = Modes.Normal },
-    { "<S-Tab>",          "<CMD>BufferLineCyclePrev<CR>",                               desc = "Previous Buffer",              mode = Modes.Normal },
-
+    { "<leader>~",        "<CMD>e $MYVIMRC | :cd %:p:h<CR>",                            desc = "Edit Vim Config",              mode = Modes.Normal },
+    { "<leader>E",        "<CMD>Oil<CR>",                                               desc = "Explorer",                     mode = Modes.Normal },
     -- def not stolen X3
     { "J",                ":m '>+1<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },
     { "K",                ":m '<-2<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },
