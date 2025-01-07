@@ -10,8 +10,7 @@ local Modes = {
     Replace  = 'r',
 }
 
-keybinds.__pre =
-{
+keybinds.__pre = {
     { "<leader>c", group = "Code" },
     { "<leader>c_", hidden = true },
     { "<leader>d", group = "Document" },
@@ -20,7 +19,7 @@ keybinds.__pre =
     { "<leader>r_", hidden = true },
     { "<leader>f", group = "Fzf" },
     { "<leader>f_", hidden = true },
-    { "<leader>s", group = "Search" },
+    { "<leader>s", group = "Split" },
     { "<leader>s_", hidden = true },
     { "<leader>w", group = "Workspace" },
     { "<leader>w_", hidden = true },
@@ -37,7 +36,7 @@ keybinds.main = {
     { "<leader>p",        '"ap',                                                        desc = "Paste from deletion buffer",   mode = { Modes.Normal, Modes.Visual }, noremap = true },
     { "<leader>q",        function() vim.lsp.buf.format() end,                          desc = "Format",                       mode = Modes.Normal },
     { "<leader>R",        function() vim.lsp.buf.rename() end,                          desc = "Rename",                       mode = Modes.Normal,                   noremap = true, silent = true },
-    { "<leader>a",        function() vim.lsp.buf.code_action() end,                     desc = " Code Action",                 mode = Modes.Normal,                   noremap = true, silent = true },
+    { "<leader>a",        function() fzf.lsp_code_actions() end,                        desc = " Code Action",                 mode = Modes.Normal,                   noremap = true, silent = true },
     { "<leader><leader>", function() fzf.files() end,                                   desc = "Find Files",                   mode = { Modes.Visual, Modes.Normal } },
     { "<leader>h",        function() fzf.buffers() end,                                 desc = "Find Buffers",                 mode = { Modes.Visual, Modes.Normal } },
     { "<leader>ff",       function() fzf.files() end,                                   desc = "Find Files",                   mode = Modes.Normal },
@@ -45,21 +44,19 @@ keybinds.main = {
     { "<leader>ds",       function() fzf.lsp_document_symbols() end,                    desc = " Document Symbols",            mode = Modes.Normal },
     { "<leader>dw",       "<CMD>w<CR>",                                                 desc = " Document Write",              mode = Modes.Normal },
     { "<leader>dc",       "<CMD>bp|bd#<CR>",                                            desc = " Document Close",              mode = Modes.Normal },
-
+    -- only for nvim >= 0.11.0 (nightly atm)
+    { "<leader>z",        function() vim.lsp.foldexpr() end,                            desc = "Toggle Fold [LSP]",            mode = Modes.Normal },
     -- Window management
-    { "<C-Left>",         "<CMD>wincmd h<CR>",                                          desc = " Move to left window",         mode = Modes.Normal },
-    { "<C-Down>",         "<CMD>wincmd j<CR>",                                          desc = " Move to down window",         mode = Modes.Normal },
-    { "<C-Right>",        "<CMD>wincmd l<CR>",                                          desc = " Move to right window",        mode = Modes.Normal },
-    { "<C-Up>",           "<CMD>wincmd k<CR>",                                          desc = " Move to up window",           mode = Modes.Normal },
     { "<C-S-Left>",       "<CMD>vertical resize -2<CR>",                                desc = "Resize window left",           mode = Modes.Normal },
     { "<C-S-Right>",      "<CMD>vertical resize +2<CR>",                                desc = "Resize window right",          mode = Modes.Normal },
     { "<C-S-Up>",         "<CMD>resize +2<CR>",                                         desc = "Resize window up",             mode = Modes.Normal },
     { "<C-S-Down>",       "<CMD>resize -2<CR>",                                         desc = "Resize window down",           mode = Modes.Normal },
-
     { "<leader>sh",       "<CMD>split<CR>",                                             desc = " Split Horizontal",            mode = Modes.Normal },
     { "<leader>sv",       "<CMD>vs<CR>",                                                desc = " Split Vertical",              mode = Modes.Normal },
+    { "<leader>se",        "<CMD>vsp | Oil<CR>",                                         desc = "Explorer (Split)",             mode = Modes.Normal },
     { "<leader>~",        "<CMD>e $MYVIMRC | :cd %:p:h<CR>",                            desc = "Edit Vim Config",              mode = Modes.Normal },
     { "<leader>E",        "<CMD>Oil<CR>",                                               desc = "Explorer",                     mode = Modes.Normal },
+    { "<leader>`",        "<CMD>vsp | Oil<CR>",                                         desc = "Explorer (Split)",             mode = Modes.Normal },
     -- def not stolen X3
     { "J",                ":m '>+1<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },
     { "K",                ":m '<-2<CR>gv=gv",                                           desc = "Move Line Down",               mode = Modes.Visual },

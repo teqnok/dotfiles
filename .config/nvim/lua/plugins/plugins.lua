@@ -11,6 +11,7 @@ return {
                 clangd = {},
                 ts_ls = {},
                 csharp_ls = {},
+                gopls = {},
             }
         },
         config = function(_, opts)
@@ -115,6 +116,7 @@ return {
             local binds = require("keybinds")
             wk.setup({
                 preset = "helix",
+                win = {border = "none"},
                 delay = 0,
             })
             wk.add(binds.__pre)
@@ -124,7 +126,7 @@ return {
     {
         "ibhagwan/fzf-lua",
         config = function()
-            require("fzf-lua").setup({ "max-perf" })
+            require("fzf-lua").setup({ "max-perf", winopts = { backdrop = false, } })
         end
     },
     {
@@ -181,46 +183,6 @@ return {
             })
         end,
     },
-    -- {
-    --     'rachartier/tiny-inline-diagnostic.nvim',
-    --     event = 'VeryLazy',
-    --     config = function()
-    --         vim.opt.updatetime = 100
-    --         vim.diagnostic.config { virtual_text = false }
-    --         vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = '#f38ba8' })
-    --         vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = '#fab387' })
-    --         vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = '#cba6f7' })
-    --         vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = '#f5c2e7' })
-    --         require('tiny-inline-diagnostic').setup {
-    --             preset = 'powerline',
-    --             options = {use_icons_from_diagnostic = true},
-    --             blend = {
-    --                 factor = 0.1,
-    --             },
-    --         }
-    --     end,
-    -- },
-    -- {
-    --     "lvimuser/lsp-inlayhints.nvim",
-    --     config = function()
-    --         require("lsp-inlayhints").setup()
-    --     end,
-    --     init = function()
-    --         vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-    --         vim.api.nvim_create_autocmd("LspAttach", {
-    --             group = "LspAttach_inlayhints",
-    --             callback = function(args)
-    --                 if not (args.data and args.data.client_id) then
-    --                     return
-    --                 end
-    --
-    --                 local bufnr = args.buf
-    --                 local client = vim.lsp.get_client_by_id(args.data.client_id)
-    --                 require("lsp-inlayhints").on_attach(client, bufnr)
-    --             end,
-    --         })
-    --     end,
-    -- },
     {
         "j-hui/fidget.nvim",
         config = function()
@@ -260,16 +222,9 @@ return {
         end,
         config = function()
             require("catppuccin").setup({
-                flavour = "auto", -- latte, frappe, macchiato, mocha
+                flavour = "auto",
                 background = {
                     dark = "mocha",
-                },
-                transparent_background = false, -- disables setting the background color.
-                show_end_of_buffer = false,     -- shows the '~' characters after the end of buffers
-                dim_inactive = {
-                    enabled = false,
-                    shade = "dark",
-                    percentage = 0.15,
                 },
                 styles = {
                     comments = { "italic" },
@@ -282,15 +237,12 @@ return {
                 custom_highlights = {},
                 default_integrations = true,
                 integrations = {
-                    cmp = true,
                     gitsigns = true,
-                    nvimtree = true,
                     treesitter = true,
                     notify = false,
                 },
             })
 
-            -- setup must be called before loading
             vim.cmd.colorscheme("catppuccin")
         end,
     },
