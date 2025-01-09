@@ -126,7 +126,7 @@ return {
     {
         "ibhagwan/fzf-lua",
         config = function()
-            require("fzf-lua").setup({ "max-perf", winopts = { backdrop = false, } })
+            require("fzf-lua").setup({ "fzf-native", winopts = { backdrop = false, split = "belowright new" } })
         end
     },
     {
