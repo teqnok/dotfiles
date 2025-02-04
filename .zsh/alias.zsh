@@ -84,4 +84,4 @@ function findpkg() {
             ;;
     esac
 }
-
+export PATH="$PATH:/home/teqnok/.dotnet/tools"

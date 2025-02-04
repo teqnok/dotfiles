@@ -1,9 +1,38 @@
 return {
     {
+        "folke/snacks.nvim",
+        opts = {
+            indent = {
+                only_scope = true,
+                enabled = true,
+                animate = { enabled = false },
+                scope = { only_current = true },
+                chunk = { enabled = true, only_current = true, char = { arrow = "─" } }
+            },
+            scroll = {
+                animate = {
+                    duration = { step = 15, total = 250 },
+                    easing = "linear",
+                },
+                -- faster animation when repeating scroll after delay
+                animate_repeat = {
+                    delay = 100, -- delay in ms before using the repeat animation
+                    duration = { step = 5, total = 50 },
+                    easing = "linear",
+                },
+                -- what buffers to animate
+                filter = function(buf)
+                    return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and
+                    vim.bo[buf].buftype ~= "terminal"
+                end,
+            },
+
+        }
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = { 'saghen/blink.cmp', "williamboman/mason.nvim", },
 
-        -- example using `opts` for defining servers
         opts = {
             servers = {
                 pyright = {},
@@ -39,6 +68,8 @@ return {
         end
     },
     {
+        "xzbdmw/colorful-menu.nvim" },
+    {
         'saghen/blink.cmp',
         lazy = false,
         dependencies = 'rafamadriz/friendly-snippets',
@@ -55,10 +86,20 @@ return {
             completion = {
                 menu = {
                     draw = {
-                        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "kind" } },
+                        columns = { { "kind_icon" }, { "label", gap = 1 } },
+                        components = {
+                            label = {
+                                width = { fill = true, max = 110 },
+                                text = function(ctx)
+                                    return require("colorful-menu").blink_components_text(ctx)
+                                end,
+                                highlight = function(ctx)
+                                    return require("colorful-menu").blink_components_highlight(ctx)
+                                end,
+                            },
+                        },
                     },
                 },
-                accept = { auto_brackets = { enabled = true } }
             },
             sources = {
                 default = { 'lsp', 'path', 'snippets' },
@@ -116,7 +157,7 @@ return {
             local binds = require("keybinds")
             wk.setup({
                 preset = "helix",
-                win = {border = "none"},
+                win = { border = "none" },
                 delay = 0,
             })
             wk.add(binds.__pre)

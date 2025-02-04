@@ -55,15 +55,43 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.expandtab = true
     end,
 })
+vim.api.nvim_create_autocmd('CmdlineEnter', {
+    group = vim.api.nvim_create_augroup(
+        'gmr_cmdheight_1_on_cmdlineenter',
+        { clear = true }
+    ),
+    desc = 'Don\'t hide the status line when typing a command',
+    command = ':set cmdheight=1',
+})
+
+vim.api.nvim_create_autocmd('CmdlineLeave', {
+    group = vim.api.nvim_create_augroup(
+        'gmr_cmdheight_0_on_cmdlineleave',
+        { clear = true }
+    ),
+    desc = 'Hide cmdline when not typing a command',
+    command = ':set cmdheight=0',
+})
+vim.api.nvim_create_autocmd('BufWritePost', {
+    group = vim.api.nvim_create_augroup(
+        'gmr_hide_message_after_write',
+        { clear = true }
+    ),
+    desc = 'Get rid of message after writing a file',
+    pattern = { '*' },
+    command = 'redrawstatus',
+})
 vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
+-- black magic to force the cursor to follow the Cursor hlgroup
+vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor'
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- Disable builtin virtual text 
-vim.diagnostic.config({virtual_text = false})
+-- Disable builtin virtual text
+vim.diagnostic.config({ virtual_text = false })
 -- vim.lsp.inlay_hint.enable(true)
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
@@ -71,3 +99,5 @@ for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+vim.api.nvim_set_hl(0, "Visual", { fg = "#1e1e2e", bg = "#cba6f7" })
+vim.api.nvim_set_hl(0, "Cursor", { fg = "#1e1e2e", bg = "#585b70" })
