@@ -1,6 +1,8 @@
 return {
     {
         "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
         opts = {
             indent = {
                 only_scope = true,
@@ -9,24 +11,32 @@ return {
                 scope = { only_current = true },
                 chunk = { enabled = true, only_current = true, char = { arrow = "─" } }
             },
-            scroll = {
-                animate = {
-                    duration = { step = 15, total = 250 },
-                    easing = "linear",
+            picker = {
+                ui_select = true,
+                preview = false,
+                layout = {
+                    layout = {
+                        box = "vertical",
+                        backdrop = false,
+                        row = -1,
+                        width = 0,
+                        height = 0.4,
+                        border = "none",
+                        title = " {title} {live} {flags}",
+                        title_pos = "left",
+                        { win = "input", height = 1, border = "none" },
+                        {
+                            box = "horizontal",
+                            { win = "list",    border = "none" },
+                            { win = "preview", title = "{preview}", width = 0.6, border = "left" },
+                        },
+                    },
                 },
-                -- faster animation when repeating scroll after delay
-                animate_repeat = {
-                    delay = 100, -- delay in ms before using the repeat animation
-                    duration = { step = 5, total = 50 },
-                    easing = "linear",
-                },
-                -- what buffers to animate
-                filter = function(buf)
-                    return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and
-                    vim.bo[buf].buftype ~= "terminal"
-                end,
-            },
-
+                -- layout = {
+                --     preset = "ivy",
+                --     border = "none",
+                -- },
+            }
         }
     },
     {
