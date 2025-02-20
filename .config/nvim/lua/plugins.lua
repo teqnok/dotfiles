@@ -11,9 +11,23 @@ return {
                 scope = { only_current = true },
                 chunk = { enabled = true, only_current = true, char = { arrow = "─" } }
             },
+            terminal = {
+                win = {
+                    wo = {
+                        winbar = "",
+                    },
+                },
+            },
             picker = {
                 ui_select = true,
                 preview = false,
+                win = {
+                    input = {
+                        keys = {
+                            ["<Esc>"] = {"close", mode = {"n", "i"}},
+                        },
+                    },
+                },
                 layout = {
                     layout = {
                         box = "vertical",
@@ -113,7 +127,9 @@ return {
             },
             sources = {
                 default = { 'lsp', 'path', 'snippets' },
-                cmdline = {},
+            },
+            cmdline = {
+                sources = {},
             },
 
             signature = { enabled = true }
